@@ -1,0 +1,6 @@
+/home/shamp03/src/xtalopt/build/src/xtalcomp/CMakeFiles/XtalComp.dir
+/home/shamp03/src/xtalopt/build/src/gapc/CMakeFiles/gapc.dir
+/home/shamp03/src/xtalopt/build/src/globalsearch/CMakeFiles/globalsearch.dir
+/home/shamp03/src/xtalopt/build/src/randomdock/CMakeFiles/randomdock.dir
+/home/shamp03/src/xtalopt/build/src/spglib/CMakeFiles/spglib.dir
+/home/shamp03/src/xtalopt/build/src/xtalopt/CMakeFiles/xtalopt.dir
