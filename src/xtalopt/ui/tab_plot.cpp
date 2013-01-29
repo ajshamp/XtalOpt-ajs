@@ -422,7 +422,7 @@ namespace XtalOpt {
           pp->setLabel(QString::number(xtal->getGeneration()));
           break;
         case Structure_L:
-          pp->setLabel(QString::number(i=1));
+          pp->setLabel(QString::number(i+1));
           break;
         }
       }
