@@ -490,6 +490,13 @@ bool MolecularXtalMutator::mutate()
     DDEBUGOUT("mutate") "Skipping strains... (numStrains is 0)";
   }
 
+  QVector<SubMolecule*> singleAtomMolecules;
+  foreach (SubMolecule *submol, d->workingMXtal.subMolecules()){
+      if(submol->numAtoms() ==1){
+          singleAtomMolecules.append(submol);
+      }
+  }
+
   // Debugging
   double strainedEnergy = 0.0;
   if (d->debug) {
@@ -506,9 +513,9 @@ bool MolecularXtalMutator::mutate()
 
     // Rank SubMolecules by energy contribution
     if (mover == NULL)
-      d->rankSubMolecules();
+      d->rankSubMolecules(singleAtomMolecules);
     else {
-      QVector<SubMolecule*> omit (1);
+      QVector<SubMolecule*> omit = singleAtomMolecules;
       omit << mover;
       d->rankSubMolecules(omit);
     }
