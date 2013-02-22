@@ -374,8 +374,14 @@ bool MolecularXtalMutator::mutate()
   if (d->checkForAbort())
     return false;
 
-  // Generate supercells if needed
-  if (d->startWithSuperCell) {
+  //Adding random number generator
+  int randomOperation;
+  srand ( time(NULL) );
+  randomOperation = rand() % 999 + 1;
+  
+  //If random number is less than 334 then symmetrize
+  if (randomOperation <=333)
+   {
     // Evaluate energies of each submolecule for ranking
     QVector<double> submolEnergies = d->ranker->evaluate();
 
@@ -426,6 +432,7 @@ bool MolecularXtalMutator::mutate()
     QString supercellType = supercell->property("supercellType").toString();
     d->workingMXtal.setProperty("supercellType", supercellType);
     DDEBUGOUT("mutate") "Selected" << supercellType;
+    DDEBUGOUT("mutate") "Applied a Symmetrization";
 
     d->workingMXtal.wrapAtomsToCell();
     d->workingMXtal.makeCoherent();
@@ -551,10 +558,15 @@ bool MolecularXtalMutator::mutate()
     const Eigen::Vector3d pos (displacementIt.value().transform.pos);
     const Eigen::Vector3d dispAxis (displacementIt.value().transform.axis);
     const double dispAngle = displacementIt.value().transform.angle;
-
+  
+    //If random operation is between 334 and 666 then a displacement occurs
+    if (334 <= randomOperation && randomOperation <=666)
+     {
     // Apply selected displacement
     d->displace(mover, pos, dispAxis, dispAngle);
     d->ranker->updateGeometry(mover);
+    DDEBUGOUT("mutate") "Applied a Displacement";
+     }
 
     // Debugging
     double displacedEnergy = 0.0;
@@ -601,11 +613,16 @@ bool MolecularXtalMutator::mutate()
     ScanMap::const_iterator rotationIt = d->scanMap.constBegin();
     for (int i = 0; i < rotationInd; ++i) ++rotationIt;
     double angle (rotationIt.value().real);
-
+    
+    // If random operation is greater than 667 then a rotation occurs 
+    if (randomOperation >=667)
+     {
     // Apply selected rotation
     d->rotateSubMolecule(mover, axis, angle);
     d->ranker->updateGeometry(mover);
-
+    DDEBUGOUT("mutate") "Applied a Rotation";
+     }
+    
     // Debugging
     double rotatedEnergy = 0.0;
     if (d->debug) {
